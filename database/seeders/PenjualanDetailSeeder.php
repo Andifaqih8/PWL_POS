@@ -32,8 +32,6 @@ class PenjualanDetailSeeder extends Seeder
                 'harga' => 850000,
                 'jumlah' => 3,
             ],
-
-         
             [
                 'detail_id' => 4,
                 'penjualan_id' => 2,
@@ -55,8 +53,6 @@ class PenjualanDetailSeeder extends Seeder
                 'harga' => 4500000,
                 'jumlah' => 1,
             ],
-
-            // Transaksi 3
             [
                 'detail_id' => 7,
                 'penjualan_id' => 3,
@@ -124,8 +120,6 @@ class PenjualanDetailSeeder extends Seeder
                 'harga' => 3200000,
                 'jumlah' => 2,
             ],
-
-            // Transaksi 6
             [
                 'detail_id' => 16,
                 'penjualan_id' => 6,
@@ -147,8 +141,6 @@ class PenjualanDetailSeeder extends Seeder
                 'harga' => 850000,
                 'jumlah' => 3,
             ],
-
-            // Transaksi 7
             [
                 'detail_id' => 19,
                 'penjualan_id' => 7,
@@ -170,8 +162,6 @@ class PenjualanDetailSeeder extends Seeder
                 'harga' => 4500000,
                 'jumlah' => 1,
             ],
-
-            // Transaksi 8
             [
                 'detail_id' => 22,
                 'penjualan_id' => 8,
@@ -194,7 +184,6 @@ class PenjualanDetailSeeder extends Seeder
                 'jumlah' => 1,
             ],
 
-            // Transaksi 9
             [
                 'detail_id' => 25,
                 'penjualan_id' => 9,
@@ -216,8 +205,6 @@ class PenjualanDetailSeeder extends Seeder
                 'harga' => 900000,
                 'jumlah' => 2,
             ],
-
-            // Transaksi 10
             [
                 'detail_id' => 28,
                 'penjualan_id' => 10,
