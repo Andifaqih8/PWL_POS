@@ -1,28 +1,27 @@
-<?php
+<DOCTYPE html>
+<html>
 
-namespace App\Http\Controllers;
+    <head>
+        <title>Data User</title>
+    </head>
 
-use App\Models\UserModel;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
+    <body>
+        <h1>Data User</h1>
+        <table border="1" cellpadding="2" cellspacing="o">
+            <tr>
+                <th>ID</th>
+                <th>Username</th>
+                <th>Nama</th>
+                <th>ID Level Pengguna</th>
+            </tr>
+            @foreach ($data as $d)
+                <tr>
+                    <td>{{ $d->user_id }} </td>
+                    <td>{{ $d->username }}</td>
+                    <td>{{ $d->nama }}</td>
+                    <td>{{ $d->level_id }}</td>
+            </tr @endforeach 
+        </table>
+    </body>
 
-class UserController extends Controller
-{
-    public function index()
-    {
-        // Tambah data user dengan Eloquent Model
-        $data = [
-            'username' => 'customer-1',
-            'nama' => 'Pelanggan',
-            'password' => Hash::make('12345'),
-            'level_id' => 4
-        ];
-
-        UserModel::insert($data); // Tambahkan data ke tabel m_user
-
-        // Coba akses model UserModel
-        $user = UserModel::all(); // Ambil semua data dari tabel m_user
-
-        return view('user', ['data' => $user]);
-    }
-}
+    </html>
