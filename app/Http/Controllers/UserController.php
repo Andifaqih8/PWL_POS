@@ -76,7 +76,7 @@ class UserController extends Controller
     //     return view('user', ['data' => $user]);
     //     }
 
-    // JS 3 PRAKTIKUM 2.3
+    // JS 4 PRAKTIKUM 2.3
         // public function index()
         // {
         // //$user = UserModel::where('level_id', 2)->count();dd ($user);
@@ -84,7 +84,7 @@ class UserController extends Controller
         // return view('user', ['data' => $user]);
         // }
 
-    // JS 3 PRAKTIKUM 2.4
+    // JS 4 PRAKTIKUM 2.4
     // public function index()
     // {
     // $user = UserModel:: firstOrCreate(
@@ -118,18 +118,80 @@ class UserController extends Controller
     
     // }
 
-    public function index()
-    {
-    $user = UserModel::firstOrNew(
-        [
-            'username' => 'manager33',
-            'nama' => 'Manager Tiga Tiga',
-            'password' => Hash::make('12345'),
-            'level_id' => 2
-        ],
-    );
-    $user->save();
+    // public function index()
+    // {
+    // $user = UserModel::firstOrNew(
+    //     [
+    //         'username' => 'manager33',
+    //         'nama' => 'Manager Tiga Tiga',
+    //         'password' => Hash::make('12345'),
+    //         'level_id' => 2
+    //     ],
+    // );
+    // $user->save();
 
-    return view('user', ['data' => $user]);
+    // return view('user', ['data' => $user]);
+    // }'
+
+    // JS4_ PRAKTIKUM 2.5
+    // public function index()
+    //  {
+    //     $user = UserModel::create([
+    //     'username' => 'manager55',
+    //         'nama' => 'Manager55',
+    //         'password' => Hash::make('12345'),
+    //         'level_id' => 2,
+    //     ]);
+    //     $user->username = 'manager56';
+    //     $user->isDirty(); // True
+    //     $user->isDirty('username'); // True
+    //     $user->isDirty('nama'); // False
+    //     $user->isDirty(['nama', 'username']); //True
+    //     $user->isClean(); // False
+    //     $user->isClean('username'); // False
+    //     $user->isClean('nama'); // True
+    //     $user->isClean(['nama', 'username']); //False
+    //     $user->save();
+    //     $user->isDirty(); //False
+    //     $user->isClean(); //True
+    //     dd($user->isDirty());
+    // }
+
+    // public function index()
+    //   {
+    // $user = UserModel::create([
+    //     'username' => 'manager11',
+    //     'nama' => 'Manager11',
+    //     'password' => Hash::make('12345'),
+    //     'level_id' => 2,
+    // ]);
+    // $user->username = 'manager12';
+    // $user->save();
+    
+    // $user->wasChanged(); // true
+    // $user->wasChanged('username'); // true
+    // $user->wasChanged(['username', 'level_id']); // true
+    // $user->wasChanged('nama'); // false
+    // dd($user->wasChanged(['nama', 'username'])); //true
+    // }
+
+    public function index()
+       {
+    $user = UserModel::all();
+        return view('user', ['data' => $user]);
+    }
+    public function tambah() {
+        return view('user_tambah');
+    }
+
+    public function tambah_simpan(Request $request) 
+    {
+        UserModel::create([
+            'username' => $request->username,
+            'nama' => $request->nama,
+            'password' => Hash::make('$request->password'),
+            'level_id' => $request->level_id,
+        ]);
+        return redirect('/user');
     }
 }
