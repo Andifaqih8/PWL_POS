@@ -1,115 +1,84 @@
 <?php
 
-return [
+namespace App\Http\Controllers;
 
-    /*
-    |--------------------------------------------------------------------------
-    | Authentication Defaults
-    |--------------------------------------------------------------------------
-    |
-    | This option controls the default authentication "guard" and password
-    | reset options for your application. You may change these defaults
-    | as required, but they're a perfect start for most applications.
-    |
-    */
+use App\Models\LevelModel;
+use App\Models\UserModel;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
-    'defaults' => [
-        'guard' => 'web',
-        'passwords' => 'users',
-    ],
+class AuthController extends Controller
+{
+    public function login()
+    {
+        if (Auth::check()) {
+            return redirect('/');
+        }
+        return view('auth.login');
+    }
 
-    /*
-    |--------------------------------------------------------------------------
-    | Authentication Guards
-    |--------------------------------------------------------------------------
-    |
-    | Next, you may define every authentication guard for your application.
-    | Of course, a great default configuration has been defined for you
-    | here which uses session storage and the Eloquent user provider.
-    |
-    | All authentication drivers have a user provider. This defines how the
-    | users are actually retrieved out of your database or other storage
-    | mechanisms used by this application to persist your user's data.
-    |
-    | Supported: "session"
-    |
-    */
+    public function postlogin(Request $request)
+    {
+        if ($request->ajax() || $request->wantsJson()) {
+            $credentials = $request->only('username', 'password');
+            if (Auth::attempt($credentials)) {
+                return response()->json([
+                    'status' => true,
+                    'message' => 'Login Berhasil',
+                    'redirect' => url('/')
+                ]);
+            }
+            return response()->json([
+                'status' => false,
+                'message' => 'Login Gagal'
+            ]);
+        }
+        return redirect('login');
+    }
+    public function logout(Request $request)
+    {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect('login');
+    }
 
-    'guards' => [
-        'web' => [
-            'driver' => 'session',
-            'provider' => 'users',
-        ],
-    ],
-
-    /*
-    |--------------------------------------------------------------------------
-    | User Providers
-    |--------------------------------------------------------------------------
-    |
-    | All authentication drivers have a user provider. This defines how the
-    | users are actually retrieved out of your database or other storage
-    | mechanisms used by this application to persist your user's data.
-    |
-    | If you have multiple user tables or models you may configure multiple
-    | sources which represent each model / table. These sources may then
-    | be assigned to any extra authentication guards you have defined.
-    |
-    | Supported: "database", "eloquent"
-    |
-    */
-
-    'providers' => [
-        'users' => [
-            'driver' => 'eloquent',
-            'model' => App\Models\UserModel::class,
-        ],
-
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
-    ],
-
-    /*
-    |--------------------------------------------------------------------------
-    | Resetting Passwords
-    |--------------------------------------------------------------------------
-    |
-    | You may specify multiple password reset configurations if you have more
-    | than one user table or model in the application and you want to have
-    | separate password reset settings based on the specific user types.
-    |
-    | The expiry time is the number of minutes that each reset token will be
-    | considered valid. This security feature keeps tokens short-lived so
-    | they have less time to be guessed. You may change this as needed.
-    |
-    | The throttle setting is the number of seconds a user must wait before
-    | generating more password reset tokens. This prevents the user from
-    | quickly generating a very large amount of password reset tokens.
-    |
-    */
-
-    'passwords' => [
-        'users' => [
-            'provider' => 'users',
-            'table' => 'password_reset_tokens',
-            'expire' => 60,
-            'throttle' => 60,
-        ],
-    ],
-
-    /*
-    |--------------------------------------------------------------------------
-    | Password Confirmation Timeout
-    |--------------------------------------------------------------------------
-    |
-    | Here you may define the amount of seconds before a password confirmation
-    | times out and the user is prompted to re-enter their password via the
-    | confirmation screen. By default, the timeout lasts for three hours.
-    |
-    */
-
-    'password_timeout' => 10800,
-
-];
+    public function register()
+    {
+        $level = LevelModel::select('level_id', 'level_nama')->get();
+        return view('auth.register')->with('level', $level);
+    }
+    public function postRegister(Request $request)
+    {
+        if ($request->ajax() || $request->wantsJson()) {
+            $rules = [
+                'level_id' => 'required|integer',
+                'username' => 'required|string|min:3|unique:m_user,username',
+                'nama' => 'required|string|max:100',
+                'password' => 'required|min:5'
+            ];
+            $validator = Validator::make($request->all(), $rules);
+            if ($validator->fails()) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Validasi Gagal',
+                    'msgField' => $validator->errors(),
+                ]);
+            }
+            // Hash password sebelum disimpan
+            $data = $request->all();
+            $data['password'] = Hash::make($request->password);
+            // Simpan data user
+            usermodel::create($data);
+            return response()->json([
+                'status' => true,
+                'message' => 'Data user berhasil disimpan',
+                'redirect' => url('login') // Redirect ke halaman login
+            ]);
+        }
+        // Jika bukan AJAX, arahkan ke halaman login
+        return redirect('login')->with('success', 'Registrasi berhasil!');
+    }
+}
