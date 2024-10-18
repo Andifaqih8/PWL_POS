@@ -37,6 +37,10 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/{id}/delete_ajax', [UserController::class, 'confirm_ajax']); // Untuk tampilkan form confirm delete user Ajax
         Route::delete('/{id}/delete_ajax', [UserController::class, 'delete_ajax']); // Untuk hapus data user Ajax
         Route::delete('/{id}', [UserController::class, 'destroy']); // menghapus data user
+        Route::get('/import', [UserController::class, 'import']); // ajax form upload excel
+        Route::post('/import_ajax', [UserController::class, 'import_ajax']); // ajax import excel
+        Route::get('/export_excel',[usercontroller::class,'export_excel']); // ajax export excel
+        Route::get('/export_pdf',[usercontroller::class,'export_pdf']); //ajax export pdf
     });
 
     //route level
@@ -56,6 +60,10 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/{id}/delete_ajax', [LevelController::class, 'confirm_ajax']); // Untuk tampilkan form confirm delete level Ajax
         Route::delete('/{id}/delete_ajax', [LevelController::class, 'delete_ajax']); // Untuk hapus data level Ajax
         Route::delete('/{id}', [LevelController::class, 'destroy']); // menghapus data level
+        Route::get('/import', [LevelController::class, 'import']); // ajax form upload excel
+        Route::post('/import_ajax', [LevelController::class, 'import_ajax']); // ajax import excel
+        Route::get('/export_excel',[levelcontroller::class,'export_excel']); // ajax export excel
+        Route::get('/export_pdf',[levelcontroller::class,'export_pdf']); //ajax export pdf
     });
 
     //route kategori
@@ -75,6 +83,10 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/{id}/delete_ajax', [KategoriController::class, 'confirm_ajax']); // Untuk tampilkan form confirm delete kategori Ajax
         Route::delete('/{id}/delete_ajax', [KategoriController::class, 'delete_ajax']); // Untuk hapus data kategori Ajax
         Route::delete('/{id}', [KategoriController::class, 'destroy']); // menghapus data kategori
+        Route::get('/import', [KategoriController::class, 'import']); // ajax form upload excel
+        Route::post('/import_ajax', [KategoriController::class, 'import_ajax']); // ajax import excel
+        Route::get('/export_excel',[kategoricontroller::class,'export_excel']); // ajax export excel
+        Route::get('/export_pdf',[kategoricontroller::class,'export_pdf']); // ajax export pdf
     });
 
     //route barang
@@ -94,6 +106,10 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/{id}/delete_ajax', [BarangController::class, 'confirm_ajax']); // Untuk tampilkan form confirm delete barang Ajax
         Route::delete('/{id}/delete_ajax', [BarangController::class, 'delete_ajax']); // Untuk hapus data barang Ajax
         Route::delete('/{id}', [BarangController::class, 'destroy']); // menghapus data barang
+        Route::get('/import', [BarangController::class, 'import']); // ajax form upload excel
+        Route::post('/import_ajax', [BarangController::class, 'import_ajax']); // ajax import excel
+        Route::get('/export_excel', [BarangController::class, 'export_excel']); // export excel
+        Route::get('/export_pdf', [BarangController::class, 'export_pdf']); // export pdf
     });
 
     //route supplier
@@ -113,5 +129,9 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/{id}/delete_ajax', [SupplierController::class, 'confirm_ajax']); // Untuk tampilkan form confirm delete supplier Ajax
         Route::delete('/{id}/delete_ajax', [SupplierController::class, 'delete_ajax']); // Untuk hapus data supplier Ajax
         Route::delete('/{id}', [SupplierController::class, 'destroy']); // menghapus data supplier
+        Route::get('/import', [SupplierController::class, 'import']); // ajax form upload excel
+        Route::post('/import_ajax', [SupplierController::class, 'import_ajax']); // ajax import excel
+        Route::get('/export_excel',[suppliercontroller::class,'export_excel']); //ajax export excel
+        Route::get('/export_pdf',[suppliercontroller::class,'export_pdf']); //ajax export pdf
     });
 });

@@ -12,4 +12,4 @@ class BarangModel extends Model
     {
         return $this->belongsTo(kategoriModel::class,'kategori_id', 'kategori_id');
     }
-}
+} 
