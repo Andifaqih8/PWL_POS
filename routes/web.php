@@ -10,9 +10,8 @@ use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PenjualanDetailController;
 use App\Http\Controllers\ProfileController;
-use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Route;
-use Monolog\Level;
+
 
 /*
 |--------------------------------------------------------------------------
